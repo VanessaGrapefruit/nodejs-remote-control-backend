@@ -1,4 +1,5 @@
-import { getActiveWindow, Point, Region, mouse, right, left, down, up } from "@nut-tree/nut-js";
+import { getActiveWindow, Point, Region, mouse, right, left, down, up, screen, FileType } from "@nut-tree/nut-js";
+import { readFile, unlink } from 'fs/promises';
 
 export class DrawingService {
     private static BROSWER_HEADER_HEIGHT = 85;
@@ -81,6 +82,18 @@ export class DrawingService {
             const newPosition = new Point(newX, newY);
             await mouse.drag([this.position, newPosition]);
         }
+    }
+
+    public static async printScreen() {
+        const region = new Region(this.position.x - 100, this.position.y - 100, 200, 200);
+        const filename = 'image.png';
+
+        await screen.captureRegion(filename, region, FileType.PNG);
+        const data = await readFile(filename);
+
+        await unlink(filename);
+
+        return data.toString('base64');
     }
 
     private static async setCursonPosition() {

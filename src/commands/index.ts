@@ -1,5 +1,6 @@
 import { mouseDown, mouseLeft, mousePosition, mouseRight, mouseUp } from "./mouse-commands";
 import { drawCircle, drawRectangle, drawSquare } from './drawing-commands';
+import { printScreen } from './screen-commands';
 
 const commandHandlersMap: Record<string, (...args: any[]) => Promise<unknown>> = {
     'mouse_up': mouseUp,
@@ -10,7 +11,7 @@ const commandHandlersMap: Record<string, (...args: any[]) => Promise<unknown>> =
     'draw_circle': drawCircle,
     'draw_square': drawSquare,
     'draw_rectangle': drawRectangle,
-
+    'prnt_scrn': printScreen
 }
 
 export async function handleCommand(query: string): Promise<unknown> {
